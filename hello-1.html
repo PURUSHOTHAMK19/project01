@@ -16,6 +16,24 @@
     #screen {
         white-space: pre-wrap;
     }
+    
+    /* ADD THIS PART */
+    #click-prompt {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        color: #555;
+        cursor: pointer;
+        z-index: 10;
+    }
+    /* END OF ADDED PART */
+
     @keyframes flash {
         0% { background-color: black; }
         50% { background-color: #300000; }
@@ -24,10 +42,16 @@
 </style>
 </head>
 <body>
+
+<div id="click-prompt" onclick="startEffect()">
+    Click to initialize...
+</div>
+
 <div id="screen"></div>
 
 <script>
 let screen = document.getElementById("screen");
+let prompt = document.getElementById("click-prompt");
 
 function glitchLine() {
     const random = Math.floor(Math.random() * 999999);
@@ -37,7 +61,7 @@ function glitchLine() {
 }
 
 let count = 0;
-let limit = 100; // run 100 times
+let limit = 20; // run 100 times
 
 function glitch() {
     if (count < limit) {
@@ -51,7 +75,21 @@ function glitch() {
     }
 }
 
-glitch();
+// ADD THIS NEW FUNCTION
+function startEffect() {
+    // 1. Hide the "Click to initialize" text
+    prompt.style.display = 'none';
+
+    // 2. Request to go fullscreen
+    document.documentElement.requestFullscreen();
+
+    // 3. Start the glitch
+    glitch();
+}
+
+// DO NOT run glitch() here on page load anymore
+// glitch(); 
+
 </script>
 </body>
 </html>
