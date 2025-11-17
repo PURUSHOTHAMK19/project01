@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Error</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: lime;
+        font-family: monospace;
+        font-size: 16px;
+        padding: 10px;
+        overflow: hidden;
+    }
+    #screen {
+        white-space: pre-wrap;
+    }
+    @keyframes flash {
+        0% { background-color: black; }
+        50% { background-color: #300000; }
+        100% { background-color: black; }
+    }
+</style>
+</head>
+<body>
+<div id="screen"></div>
+
+<script>
+let screen = document.getElementById("screen");
+
+function glitchLine() {
+    const random = Math.floor(Math.random() * 999999);
+    const text = "⚠️ SYSTEM FAILURE 0x" + random.toString(16).toUpperCase() +
+                 " — MEMORY CORRUPTION DETECTED";
+    return text;
+}
+
+let count = 0;
+let limit = 100; // run 100 times
+
+function glitch() {
+    if (count < limit) {
+        screen.innerText += glitchLine() + "\n";
+        document.body.style.animation = "flash 0.1s";
+        setTimeout(() => { document.body.style.animation = ""; }, 120);
+        count++;
+        setTimeout(glitch, 60); // fast animation
+    } else {
+        screen.innerText += "\n\n✔️ SYSTEM STABILIZED. NO DATA LOST.";
+    }
+}
+
+glitch();
+</script>
+</body>
+</html>
